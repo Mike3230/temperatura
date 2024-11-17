@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table,tr,td {
+            text-align: center;
+            border-width: 3px;
+            border-collapse: collapse;
+            background-color: lightgray;
+        }
+        textarea{
+            resize: none;
+            height: 75%;
+            text-align: center;
+        }
+        table{
+            width: 70%;
+            height: 25vb;
+            vertical-align: middle;
+        }
+        tr{
+            height: 8vb;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <center>
+    <br>
+    <br>
+    <br>
+    <br>
+    <table border="">
+        <tr>
+            <td>Celcius</td>
+            <td>Kelvin</td>
+            <td>Fahrenheit</td>
+        </tr>
+        <tr>
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="width: 70%;"><textarea style="width: 70%;"  id="caixa1"  placeholder="Digite uma temperatura em graus Celcius e envie"></textarea></td>
+                        <td style="text-align: left;"><button onclick="capturarInput1();">Enviar</button></td>
+                    </tr>
+                </table>
+            </td>
+            <td><textarea  id="caixa2"  placeholder="Digite uma temperatura em graus Kelvin e pressione Enter"></textarea></td>
+            <td><textarea  id="caixa3"  placeholder="Digite uma temperatura em graus Fahrenheit" oninput="capturarInput2();"></textarea></td>
+        </tr>
+        <tr>
+            <td colspan="3"><a href="https://www.valaco.com.br/inf_tecnicas/und_temperatura.html"><button>Fonte</button></a></td>
+        </tr>
+
+    </table>
+    </center>
+
+    <script>
+        function capturarInput1(){
+            var celcius1 = document.getElementById("caixa1").value;
+
+            var kelvin1 = (+celcius1 + 273.15).toFixed(2) //faz a conversão de celcius para kelvini
+            var fahrenheit1 = (+celcius1 * 1.8 + 32).toFixed(2) //faz a conversão de celcius para fahrenheit
+
+            if(celcius1.trim() !== ""){
+                    document.getElementById("caixa2").value = kelvin1; //exibe o resultado em  kelvin
+                    document.getElementById("caixa3").value = fahrenheit1; //exibe o resultado em fahrenheit
+                    temperatura()} //chama a função para trocar a cor de fundo
+            else{
+                document.getElementById("caixa1").innerText = "Por favor digite algo!";} //exibe uma mensagem caso não tenha sido introduzido um valor
+        }
+    </script>
+
+    <script>
+        var kelvin2 = document.getElementById("caixa2");// Seleciona a caixa de texto
+
+        // Adiciona um evento para quando o usuário pressionar Enter
+        kelvin2.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            var input = kelvin2.value; // Pega o valor do input
+            processarEntrada(input);} // Chama a função para processar a entrada 
+        });
+        // Função para processar a entrada e exibir a saída
+        function processarEntrada(input) {
+
+        var celcius2 = (input - 273.15).toFixed(2); //faz a conversão de kelvin para celcius
+        var fahrenheit2 = (+celcius2 * 1.8 + 32).toFixed(2); //faz a conversão de kelvin para fahrenheit
+
+        if(input.trim() !== ""){
+                    document.getElementById("caixa1").value = celcius2 //exibe o resultado em celcius
+                    document.getElementById("caixa3").value = fahrenheit2 //exibe o resultado em fahrenheit
+                    temperatura()} //chama a função para trocar a cor de fundo
+        else{
+            document.getElementById("caixa2").innerText = "Por favor digite algo!";} //exibe uma mensagem caso não tenha sido introduzido um valor
+        }
+    </script>
+
+    <script>
+        function capturarInput2(){
+            var fahrenheit3 = document.getElementById("caixa3").value;
+
+            var celcius3 = ((+fahrenheit3 -32) /1.8).toFixed(2); //faz a conversão de fahrenheit para celcius
+            var kelvin3 = (+celcius3 + 273.15).toFixed(2); //faz a conversão de fahrenheit para kelvin
+
+            if(fahrenheit3.trim() !== ""){
+                document.getElementById("caixa1").value = celcius3 //exibe o resultado em celcius
+                document.getElementById("caixa2").value = kelvin3 //exibe o resultado em  kelvin
+                temperatura()} //chama a função para trocar a cor de fundo
+        }
+    </script>
+    
+    <input type="number"  id="area"  placeholder="area " oninput="temperatura()" hidden></textarea>
+    <script>
+        function temperatura(){
+        var temperatura = document.getElementById("caixa1").value;
+
+            if(temperatura < 18){
+                var f = (255 * temperatura) / 17; //transforma a temperatura em um nnumero entre 0 e 255
+                document.body.style.backgroundColor = `rgb(${f*1.7}, ${255 }, ${255 - f })`;} //exibe a cor resultante conforme o valor de temperatura
+            
+            else if( 18 <= temperatura ){
+                var c = (255 * (temperatura-18) / 15) //transforma a temperatura em um nnumero entre 0 e 255
+                document.body.style.backgroundColor = `rgb(${(255)}, ${255 - c}, ${0})`;} //exibe a cor resultante conforme o valor de temperatura
+        }
+    </script>
+</body>
+</html>
